@@ -14,7 +14,8 @@ const app = express();
 const port = 5000;
 // http://localhost:3000/register/registrationDetails
 const corsOptions = {
-    origin: 'http://localhost:3000', // Replace with your specific frontend URL
+    origin: 'http://localhost:3000', // Replace with your specific frontend 
+    "Access-Control-Allow-Origin": "*",
     credentials: true, // This allows the server to accept credentials (cookies, authorization headers, etc.)
   };
   app.options('*', cors(corsOptions)); // Preflight requests
