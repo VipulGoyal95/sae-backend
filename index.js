@@ -15,6 +15,7 @@ const port = 5000;
 // http://localhost:3000/register/registrationDetails
 const corsOptions = {
     origin: 'http://localhost:3000', // Replace with your specific frontend URL
+    Access-Control-Allow-Origin: 'http://localhost:3000'
     credentials: true, // This allows the server to accept credentials (cookies, authorization headers, etc.)
   };
   
