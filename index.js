@@ -22,7 +22,7 @@ const transporter = nodemailer.createTransport({
     service: 'gmail', // or your preferred service
     auth: {
         user: 'vipulgoyal151@gmail.com',
-        pass: 'dxlf qepv iqtp cmyc'
+        pass: process.env.PASS
     }
 });
 app.get('/',(req,res)=>{
@@ -48,7 +48,7 @@ app.post('/create-order', async (req, res) => {
     // Route to handle email sending
     app.post('/send-email', (req, res) => {
         const { name, email, phone, college, branch, semester, department, timeSlot1, registrationId } = req.body;
-        console.log(req.body);
+        // console.log(req.body);
         const mailOptions = {
             from: 'vipulgoyal151@gmail.com',
             to: email,
