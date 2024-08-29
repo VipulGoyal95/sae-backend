@@ -13,6 +13,12 @@ const razorpay = new Razorpay({
 const app = express();
 const port = 5000;
 
+const corsOptions = {
+    origin: 'localhost:3000', // Replace with your specific frontend URL
+    credentials: true, // This allows the server to accept credentials (cookies, authorization headers, etc.)
+  };
+  
+  app.use(cors(corsOptions));
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
