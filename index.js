@@ -14,13 +14,14 @@ const app = express();
 const port = 5000;
 // http://localhost:3000/register/registrationDetails
 const corsOptions = {
-    origin: 'http://localhost:3000', // Replace with your specific frontend 
-    "Access-Control-Allow-Origin": "*",
-    credentials: true, // This allows the server to accept credentials (cookies, authorization headers, etc.)
+    origin: '*', // Allow all origins
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allow all methods
+    allowedHeaders: ['Content-Type', 'Authorization'], // Allow specific headers
+    credentials: true // Allow credentials if needed
   };
   app.options('*', cors(corsOptions)); // Preflight requests
   
-  app.use(cors(corsOptions));
+//   app.use(cors(corsOptions));
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
