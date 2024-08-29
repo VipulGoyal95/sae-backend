@@ -12,9 +12,9 @@ const razorpay = new Razorpay({
 
 const app = express();
 const port = 5000;
-
+// http://localhost:3000/register/registrationDetails
 const corsOptions = {
-    origin: 'localhost:3000', // Replace with your specific frontend URL
+    origin: 'http://localhost:3000', // Replace with your specific frontend URL
     credentials: true, // This allows the server to accept credentials (cookies, authorization headers, etc.)
   };
   
