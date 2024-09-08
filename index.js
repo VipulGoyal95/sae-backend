@@ -119,7 +119,9 @@ app.post('/create-order', async (req, res) => {
         transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
                 console.log(error);
-                return res.status(500).json({ error: 'Failed to send email' });
+                return res.status(500).json({ error: 'Failed to send email',
+                    message:error.message
+                 });
             }
             res.status(200).json({ message: 'Email sent successfully' });
         });
