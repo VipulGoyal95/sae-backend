@@ -160,7 +160,7 @@ app.post('/create-order', async (req, res) => {
             res.status(200).json({ message: 'Email sent successfully' });
         });
     });
-    app.post('/send-email', (req, res) => {
+    app.post('/verify-email', (req, res) => {
         const { email,registrationId } = req.body;
         // console.log(req.body);
         const mailOptions = {
