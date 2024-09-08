@@ -30,7 +30,7 @@ app.use(bodyParser.json());
 const transporter = nodemailer.createTransport({
     service: 'gmail', // or your preferred service
     auth: {
-        user: 'vipulgoyal151@gmail.com',
+        user: 'saenitkkr@nitkkr.ac.in',
         pass: process.env.PASS
     }
 });
@@ -63,7 +63,7 @@ app.post('/create-order', async (req, res) => {
             to: email,
             subject: 'Successfull Registration for Autokriti 2024',
             html: `
-            <h2>Your Registration for Autokriti 2024 has been completed and <span style={{color:"red"}}> Confirmation is under process</span></h2>
+            <h2>Your Registration for Autokriti 2024 has been completed and <span style="color:red;"}> Confirmation is under process</span></h2>
             <h3>Here's what was received</h3>
              <table style="width: 100%; border-collapse: collapse;">
             <thead>
