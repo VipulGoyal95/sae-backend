@@ -127,13 +127,14 @@ app.post('/create-order', async (req, res) => {
         });
     });
     app.post('/send-email', (req, res) => {
-        const { name, email, phone, college, branch, semester, department, timeSlot1, registrationId } = req.body;
+        const { email,registrationId } = req.body;
         // console.log(req.body);
         const mailOptions = {
             from: 'vipulgoyal151@gmail.com',
             to: email,
             subject: 'Successfull Registration for Autokriti 2024',
-            html: `<h3>Your Registration for Autokriti</h3>`
+            html: `<h3>Your Registration for Autokriti 2024 has been completed</h3>
+            <h4>Here is your Registration ID: ${registrationId}</h4>`
             
         };
 
