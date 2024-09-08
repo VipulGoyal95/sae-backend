@@ -4,6 +4,8 @@ const nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const Razorpay = require('razorpay');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 require("dotenv").config();
 const razorpay = new Razorpay({
     key_id: process.env.KEY_ID,
@@ -37,6 +39,38 @@ const transporter = nodemailer.createTransport({
 app.get('/',(req,res)=>{
     res.send("Server chal raha h");
 });
+const JWT_SECRET = process.env.JWT_SECRET;
+const users = [
+    {
+      id: 1,
+      email: 'govindmahawar960@gmail.com',
+      password: bcrypt.hashSync('adminpanelpassword@123', 8), // Passwords should be hashed
+    },
+  ];
+
+  app.post('/api/login', (req, res) => {
+    const { email, password } = req.body;
+  
+    // Find the user with the provided email
+    const user = users.find((user) => user.email === email);
+    if (!user) {
+      return res.status(401).json({ message: 'Invalid email or password' });
+    }
+  
+    // Verify the password
+    const passwordIsValid = bcrypt.compareSync(password, user.password);
+    if (!passwordIsValid) {
+      return res.status(401).json({ message: 'Invalid email or password' });
+    }
+  
+    // Generate a JWT token
+    const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, {
+      expiresIn: '2d', // Token expires in 1 hour
+    });
+  
+    // Return the token to the client
+    res.json({ token });
+  });
 
 app.post('/create-order', async (req, res) => {
     const options = {
@@ -146,6 +180,8 @@ app.post('/create-order', async (req, res) => {
             res.status(200).json({ message: 'Email sent successfully' });
         });
     });
+
+
     app.listen(port, () => {
         console.log(`Server running on http://localhost:${port}`);
     });
