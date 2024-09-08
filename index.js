@@ -56,14 +56,14 @@ app.post('/create-order', async (req, res) => {
 
     // Route to handle email sending
     app.post('/send-email', (req, res) => {
-        const { name, email, phone, college, branch, semester, department, timeSlot1, registrationId } = req.body;
+        const { name, email, phone, college, branch, semester, department, timeSlot1} = req.body;
         // console.log(req.body);
         const mailOptions = {
-            from: 'vipulgoyal151@gmail.com',
+            from: 'saenitkkr@nitkkr.ac.in',
             to: email,
             subject: 'Successfull Registration for Autokriti 2024',
             html: `
-            <h2>Your Registration for Autokriti 2024 has been completed</h2>
+            <h2>Your Registration for Autokriti 2024 has been completed and <span style={{color:"red"}}> Confirmation is under process</span></h2>
             <h3>Here's what was received</h3>
              <table style="width: 100%; border-collapse: collapse;">
             <thead>
@@ -102,12 +102,17 @@ app.post('/create-order', async (req, res) => {
                     <td style="border: 1px solid #ddd; padding: 8px;">${department}</td>
                 </tr>
                 <tr>
-                    <td style="border: 1px solid #ddd; padding: 8px;">Time Slot</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">${timeSlot1} September</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">Time Slot</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">${timeSlot1} September</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 8px;">Transaction ID</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">${department}</td>
                 </tr>
             </tbody>
         </table>
-            <h3>Here is Your Registration ID: ${registrationId}</h3>
+            <h4>We will verify your Registration details within 72 Hours</h4>
+            <h4>You will receive registration ID After confirmation</h4>
         `
         };
 
@@ -119,7 +124,25 @@ app.post('/create-order', async (req, res) => {
             res.status(200).json({ message: 'Email sent successfully' });
         });
     });
+    app.post('/send-email', (req, res) => {
+        const { name, email, phone, college, branch, semester, department, timeSlot1, registrationId } = req.body;
+        // console.log(req.body);
+        const mailOptions = {
+            from: 'vipulgoyal151@gmail.com',
+            to: email,
+            subject: 'Successfull Registration for Autokriti 2024',
+            html: `<h3>Your Registration for Autokriti</h3>`
+            
+        };
 
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                console.log(error);
+                return res.status(500).json({ error: 'Failed to send email' });
+            }
+            res.status(200).json({ message: 'Email sent successfully' });
+        });
+    });
     app.listen(port, () => {
         console.log(`Server running on http://localhost:${port}`);
     });
