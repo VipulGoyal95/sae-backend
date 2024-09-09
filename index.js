@@ -20,9 +20,9 @@ const corsOptions = {
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allow all methods
     allowedHeaders: ['Content-Type', 'Authorization'], // Allow specific headers
     credentials: true // Allow credentials if needed
-  };
-  app.options('*', cors(corsOptions)); // Preflight requests
-  
+};
+app.options('*', cors(corsOptions)); // Preflight requests
+
 //   app.use(cors(corsOptions));
 // Middleware
 app.use(cors());
@@ -36,41 +36,41 @@ const transporter = nodemailer.createTransport({
         pass: process.env.PASS
     }
 });
-app.get('/',(req,res)=>{
+app.get('/', (req, res) => {
     res.send("Server chal raha h");
 });
 const JWT_SECRET = process.env.JWT_SECRET;
 const users = [
     {
-      id: 1,
-      email: 'govindmahawar960@gmail.com',
-      password: bcrypt.hashSync('adminpanelpassword@123', 8), // Passwords should be hashed
+        id: 1,
+        email: 'govindmahawar960@gmail.com',
+        password: bcrypt.hashSync('adminpanelpassword@123', 8), // Passwords should be hashed
     },
-  ];
+];
 
-  app.post('/api/login', (req, res) => {
+app.post('/api/login', (req, res) => {
     const { email, password } = req.body;
-  
+
     // Find the user with the provided email
     const user = users.find((user) => user.email === email);
     if (!user) {
-      return res.status(401).json({ message: 'Invalid email or password' });
+        return res.status(401).json({ message: 'Invalid email or password' });
     }
-  
+
     // Verify the password
     const passwordIsValid = bcrypt.compareSync(password, user.password);
     if (!passwordIsValid) {
-      return res.status(401).json({ message: 'Invalid email or password' });
+        return res.status(401).json({ message: 'Invalid email or password' });
     }
-  
+
     // Generate a JWT token
     const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, {
-      expiresIn: '2d', // Token expires in 1 hour
+        expiresIn: '2d', // Token expires in 1 hour
     });
-  
+
     // Return the token to the client
     res.json({ token });
-  });
+});
 
 app.post('/create-order', async (req, res) => {
     const options = {
@@ -88,15 +88,15 @@ app.post('/create-order', async (req, res) => {
     }
 });
 
-    // Route to handle email sending
-    app.post('/send-email', (req, res) => {
-        const { name, email, phone, college, branch, semester, department, timeSlot1} = req.body;
-        // console.log(req.body);
-        const mailOptions = {
-            from: 'saenitkkr@nitkkr.ac.in',
-            to: email,
-            subject: 'Successfull Registration for Autokriti 2024',
-            html: `
+// Route to handle email sending
+app.post('/send-email', (req, res) => {
+    const { name, email, phone, college, branch, semester, department, timeSlot1 } = req.body;
+    // console.log(req.body);
+    const mailOptions = {
+        from: 'saenitkkr@nitkkr.ac.in',
+        to: email,
+        subject: 'Successfull Registration for Autokriti 2024',
+        html: `
             <h2>Your Registration for Autokriti 2024 has been completed and <span style="color:red;"}> Confirmation is under process</span></h2>
             <h3>Here's what was received</h3>
              <table style="width: 100%; border-collapse: collapse;">
@@ -139,49 +139,46 @@ app.post('/create-order', async (req, res) => {
                 <td style="border: 1px solid #ddd; padding: 8px;">Time Slot</td>
                 <td style="border: 1px solid #ddd; padding: 8px;">${timeSlot1} September</td>
                 </tr>
-                <tr>
-                    <td style="border: 1px solid #ddd; padding: 8px;">Transaction ID</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">${department}</td>
-                </tr>
             </tbody>
         </table>
             <h4>We will verify your Registration details within 72 Hours</h4>
             <h4>You will receive registration ID After confirmation</h4>
         `
-        };
+    };
 
-        transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-                console.log(error);
-                return res.status(500).json({ error: 'Failed to send email',
-                    message:error.message
-                 });
-            }
-            res.status(200).json({ message: 'Email sent successfully' });
-        });
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.log(error);
+            return res.status(500).json({
+                error: 'Failed to send email',
+                message: error.message
+            });
+        }
+        res.status(200).json({ message: 'Email sent successfully' });
     });
-    app.post('/verify-email', (req, res) => {
-        const { email,registrationId } = req.body;
-        // console.log(req.body);
-        const mailOptions = {
-            from: 'vipulgoyal151@gmail.com',
-            to: email,
-            subject: 'Successfull Registration for Autokriti 2024',
-            html: `<h3>Your Registration for Autokriti 2024 has been completed</h3>
+});
+app.post('/verify-email', (req, res) => {
+    const { email, registrationId } = req.body;
+    // console.log(req.body);
+    const mailOptions = {
+        from: 'vipulgoyal151@gmail.com',
+        to: email,
+        subject: 'Your Registration for Autokriti 2024 has been Confirmed!!',
+        html: `<h3>Congratulation's Your Registration for Autokriti 2024 has been completed</h3>
             <h4>Here is your Registration ID: ${registrationId}</h4>`
-            
-        };
 
-        transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-                console.log(error);
-                return res.status(500).json({ error: 'Failed to send email' });
-            }
-            res.status(200).json({ message: 'Email sent successfully' });
-        });
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.log(error);
+            return res.status(500).json({ error: 'Failed to send email' });
+        }
+        res.status(200).json({ message: 'Email sent successfully' });
     });
+});
 
 
-    app.listen(port, () => {
-        console.log(`Server running on http://localhost:${port}`);
-    })
+app.listen(port, () => {
+    console.log(`Server running on http://localhost:${port}`);
+})
