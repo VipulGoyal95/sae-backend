@@ -141,8 +141,8 @@ app.post('/send-email', (req, res) => {
                 </tr>
             </tbody>
         </table>
-            <h4>We will verify your Registration details within 72 Hours</h4>
-            <h4>You will receive registration ID After confirmation</h4>
+            <h3>We will verify your Registration details within 72 Hours</h3>
+            <h3>You will receive registration ID After confirmation</h3>
         `
     };
 
@@ -165,7 +165,7 @@ app.post('/verify-email', (req, res) => {
         to: email,
         subject: 'Your Registration for Autokriti 2024 has been Confirmed!!',
         html: `<h3>Congratulation's Your Registration for Autokriti 2024 has been completed</h3>
-            <h4>Here is your Registration ID: ${registrationId}</h4>`
+            <h3>Here is your Registration ID: ${registrationId}</h3>`
 
     };
 
