@@ -44,7 +44,7 @@ const users = [
     {
         id: 1,
         email: 'govindmahawar960@gmail.com',
-        password: bcrypt.hashSync('adminpanelpassword@123', 8), // Passwords should be hashed
+        password: bcrypt.hashSync('Govindsae@6164', 8), // Passwords should be hashed
     },
 ];
 
