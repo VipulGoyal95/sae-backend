@@ -137,7 +137,7 @@ app.post('/send-email', (req, res) => {
                 </tr>
                 <tr>
                 <td style="border: 1px solid #ddd; padding: 8px;">Time Slot</td>
-                <td style="border: 1px solid #ddd; padding: 8px;">${timeSlot1} September</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">${timeSlot1==="27-29"?"27-29 September":"4-6 October"}</td>
                 </tr>
             </tbody>
         </table>
