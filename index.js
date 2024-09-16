@@ -161,7 +161,7 @@ app.post('/verify-email', (req, res) => {
     const { email, registrationId } = req.body;
     // console.log(req.body);
     const mailOptions = {
-        from: 'vipulgoyal151@gmail.com',
+        from: 'saenitkkr@nitkkr.ac.in',
         to: email,
         subject: 'Your Registration for Autokriti 2024 has been Confirmed!!',
         html: `<h3>Congratulation's Your Registration for Autokriti 2024 has been completed</h3>
@@ -178,6 +178,26 @@ app.post('/verify-email', (req, res) => {
     });
 });
 
+app.post('/cancel-email', (req, res) => {
+    const { name,email, registrationId } = req.body;
+    // console.log(req.body);
+    const mailOptions = {
+        from: 'saenitkkr@nitkkr.ac.in',
+        to: email,
+        subject: 'Your Registration for Autokriti 2024 has been cancelled',
+        html: `<h3>Dear ${name},</h3>
+        <h3>We regret to inform you that your registration for Autokriti 2024 has been cancelled due to the submission of incorrect payment details.</h3>`
+
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.log(error);
+            return res.status(500).json({ error: 'Failed to send email' });
+        }
+        res.status(200).json({ message: 'Email sent successfully' });
+    });
+});
 
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
