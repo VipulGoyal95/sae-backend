@@ -11,6 +11,7 @@ const razorpay = new Razorpay({
     key_id: process.env.KEY_ID,
     key_secret: process.env.KEY_SECRET,
 });
+const cashfreeroute = require("./routes/cashfreeRoute");
 
 const app = express();
 const port = 5000;
@@ -28,6 +29,7 @@ app.options('*', cors(corsOptions)); // Preflight requests
 app.use(cors());
 app.use(bodyParser.json());
 
+app.use("/api", cashfreeroute);
 // Create a transporter object using your SMTP service
 const transporter = nodemailer.createTransport({
     service: 'gmail', // or your preferred service
