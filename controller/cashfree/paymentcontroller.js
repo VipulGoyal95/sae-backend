@@ -37,8 +37,8 @@ const newOrderId = async (req, res) => {
                 customer_name: name
             },
             order_meta: {
-                // return_url: `https://yourfrontend.com/payment-status?order_id=${orderId}`,
-                // notify_url: "https://your-backend.com/webhook/cashfree", 
+                return_url: `https://saenitkurukshetra.com/cashfree/test/payment`,
+                notify_url: `https://sae-backend.vercel.app/api/status/${orderId}`, 
                 payment_methods: 'cc,dc,upi,nb'
             }
         };
@@ -73,11 +73,9 @@ const checkStatus = async (req, res) => {
         const response = await axios.get(`${CASHFREE_API_URL}/${orderid}`, { headers: HEADERS });
 
         if (response.data?.order_status === "PAID") {
-            return res.redirect('https://saenitkurukshetra.com/payment/success');
-        } else if (response.data?.order_status === "ACTIVE") {
-            return res.redirect(`https://saenitkurukshetra.com/payment/${response.data.payment_session_id}`);
-        } else {
-            return res.redirect('https://saenitkurukshetra.com/payment/failure');
+            // return res.redirect('https://saenitkurukshetra.com/payment/success');
+        } else if (response.data?.order_status === "FAILED") {
+            // return res.redirect(`https://saenitkurukshetra.com/payment/${response.data.payment_session_id}`);
         }
 
     } catch (error) {
