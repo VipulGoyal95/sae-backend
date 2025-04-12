@@ -71,14 +71,14 @@ const checkStatus = async (req, res) => {
         }
 
         const response = await axios.get(`${CASHFREE_API_URL}/${orderid}`, { headers: HEADERS });
-        return res.status(200).json({
-            success:true,
-            message:"success"
-        })
+        // return res.status(200).json({
+        //     success:true,
+        //     message:"success"
+        // })
         if (response.data?.order_status === "PAID") {
-            // return res.redirect('https://saenitkurukshetra.com/payment/success');
+            return res.redirect('https://saenitkurukshetra.com/payment/success');
         } else if (response.data?.order_status === "FAILED") {
-            // return res.redirect(`https://saenitkurukshetra.com/payment/${response.data.payment_session_id}`);
+            return res.redirect(`https://saenitkurukshetra.com/payment/failed`);
         }
 
     } catch (error) {
