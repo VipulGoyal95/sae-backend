@@ -37,7 +37,7 @@ const newOrderId = async (req, res) => {
                 customer_name: name
             },
             order_meta: {
-                return_url: `https://saenitkurukshetra.com/cashfree/payment`,
+                return_url: `https://sae-backend.vercel.app/api/status/${orderId}`,
                 notify_url: `https://sae-backend.vercel.app/api/status/${orderId}`, 
                 payment_methods: 'cc,dc,upi,nb'
             }
