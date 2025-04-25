@@ -12,6 +12,7 @@ const razorpay = new Razorpay({
     key_secret: process.env.KEY_SECRET,
 });
 const cashfreeroute = require("./routes/cashfreeRoute");
+const paypalroute = require("./routes/paypalRoute");
 
 const app = express();
 const port = 5000;
@@ -30,6 +31,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.use("/api", cashfreeroute);
+app.use("/api/paypal", paypalroute);
 
 // Create a transporter object using your SMTP service
 const transporter = nodemailer.createTransport({
