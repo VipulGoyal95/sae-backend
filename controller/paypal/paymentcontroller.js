@@ -8,7 +8,7 @@ paypal.configure({
 
 
 const createPayment = async (req, res) => {
-    res.setHeader('Access-Control-Allow-Origin', 'https://saenitkurukshetra.com');
+    res.setHeader('Access-Control-Allow-Origin', 'https://www.saenitkurukshetra.com');
     const {amount}=req.body;
     // console.log(amount);
     let data
