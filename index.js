@@ -96,30 +96,6 @@ app.post('/create-order', async (req, res) => {
     }
 });
 
-app.post("/add-data",async (req,res)=>{
-    const data = req.body;
-
-    try {
-        res.cookie("UserData", JSON.stringify(data), {
-            httpOnly: true,  // makes cookie not accessible by JS
-            secure: false,   // set true if using https
-            maxAge: 1000 * 60 * 60 * 24 // 1 day
-          });
-
-        // Cookie set above will be available on the next request, not this one.
-        // Use the request body directly to write to DB now.
-        const userdata = data;
-        const docRef = await db.collection("AutokritiRegistration").add(userdata);
-    
-        console.log("Document written with ID: ", docRef.id);
-        return res.json({
-            success: true,
-            message: docRef
-        })
-      } catch (error) {
-        console.error("Error adding document: ", error);
-      }
-})
 
 
 // Route to handle email sending
