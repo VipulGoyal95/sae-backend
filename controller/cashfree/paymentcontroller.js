@@ -57,8 +57,8 @@ const newOrderId = async (req, res) => {
         }
 
     } catch (error) {
-        console.error("Cashfree Order Error:", error.response?.data || error.message);
-        return res.status(500).json({ success: false, message: "Server Error" });
+        console.error("Cashfree Order Error:", error);
+        return res.status(500).json({ success: false, message: error.response?.data || error.message });
     }
 };
 

@@ -1,10 +1,9 @@
 // const {newOrderId, checkStatus} = require('../../controller/cashfree/paymentController');
 const express = require('express');
 const { newOrderId, checkStatus } = require('../controller/cashfree/paymentcontroller');
-const router = express();
+const router = express.Router();
 
-
-router.post('/payment',newOrderId);
+router.post('/payment', newOrderId);
 router.get('/status/:orderid', checkStatus);
 
 module.exports = router;
