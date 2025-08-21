@@ -14,7 +14,6 @@ const razorpay = new Razorpay({
 const { db } = require("./firebase.js");
 const cashfreeroute = require("./routes/cashfreeRoute");
 const paypalroute = require("./routes/paypalRoute");
-const cookieParser = require("cookie-parser");
 
 const app = express();
 const port = 5000;
@@ -31,7 +30,6 @@ app.options('*', cors(corsOptions)); // Preflight requests
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
-app.use(cookieParser());
 
 app.use("/api", cashfreeroute);
 app.use("/api/paypal", paypalroute);
@@ -96,6 +94,25 @@ app.post('/create-order', async (req, res) => {
     }
 });
 
+app.post("/add-data",async (req,res)=>{
+    const data = req.body;
+
+    try {
+
+        // Cookie set above will be available on the next request, not this one.
+        // Use the request body directly to write to DB now.
+        const userdata = data;
+        const docRef = await db.collection("AutokritiRegistration").add(userdata);
+    
+        console.log("Document written with ID: ", docRef.id);
+        return res.json({
+            success: true,
+            message: docRef
+        })
+      } catch (error) {
+        console.error("Error adding document: ", error);
+      }
+})
 
 
 // Route to handle email sending
