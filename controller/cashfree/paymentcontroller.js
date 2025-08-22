@@ -118,55 +118,56 @@ const checkStatus = async (req, res) => {
                         subject: "Registration Successful for Autokriti 15.0!",
                         text: `Hi ${recipientName},
 
-Thank you for registering for Autokriti 15.0, the 15th edition of North India’s largest automotive workshop.
+                Thank you for registering for Autokriti 15.0, the 15th edition of North India’s largest automotive workshop.
 
-We look forward to your presence at NIT Kurukshetra on 4th September, 2025.
+                We look forward to your presence at NIT Kurukshetra on 4th September, 2025.
 
-The detailed schedule will be shared with you shortly. 
+                The detailed schedule will be shared with you shortly. 
 
-Stay tuned for more information!
+                Stay tuned for more information!
 
-Best Wishes,
-SAE NIT Kurukshetra`,
+                Best Wishes,
+                SAE NIT Kurukshetra`,
                         html: `
-  <div style="max-width:600px;margin:0 auto;background:#ffffff;border-radius:10px;overflow:hidden;
-              border:1px solid #e5e5e5;font-family:Arial,Helvetica,sans-serif;">
-    
-    <!-- Banner -->
-    <img src="https://res.cloudinary.com/dvzvjohzj/image/upload/v1755804308/poster_hu9ivl.jpg" 
-         alt="Autokriti 15.0" 
-         style="width:100%;display:block;max-height:250px;object-fit:cover;" />
+                  <div style="max-width:600px;margin:0 auto;background:#ffffff;border-radius:10px;overflow:hidden;
+                              border:1px solid #e5e5e5;font-family:Arial,Helvetica,sans-serif;">
 
-    <!-- Body -->
-    <div style="padding:20px;text-align:center;color:#333;">
-      <h2 style="margin-top:0;color:#2c3e50;font-size:22px;">Hi ${recipientName},</h2>
+                    <!-- Banner -->
+                    <img src="https://res.cloudinary.com/dvzvjohzj/image/upload/v1755804308/poster_hu9ivl.jpg" 
+                         alt="Autokriti 15.0" 
+                         style="width:100%;display:block;max-height:250px;object-fit:cover;" />
 
-      <p style="font-size:16px;line-height:1.6;margin:15px 0;color:#555;">
-        Thank you for registering for <strong>Autokriti 15.0</strong>, 
-        the 15th edition of North India’s largest automotive workshop.
-      </p>
+                    <!-- Body -->
+                    <div style="padding:20px;text-align:center;color:#333;">
+                      <h2 style="margin-top:0;color:#2c3e50;font-size:22px;">Hi ${recipientName},</h2>
 
-      <p style="font-size:16px;line-height:1.6;margin:15px 0;color:#555;">
-        We look forward to your presence at <strong>NIT Kurukshetra</strong> on 
-        <strong>4th September, 2025</strong>.
-      </p>
+                      <p style="font-size:16px;line-height:1.6;margin:15px 0;color:#555;">
+                        Thank you for registering for <strong>Autokriti 15.0</strong>, 
+                        the 15th edition of North India’s largest automotive workshop.
+                      </p>
 
-      <p style="font-size:16px;line-height:1.6;margin:15px 0;color:#555;">
-        The detailed schedule will be shared with you shortly. <br/>
-        Stay tuned for more information!
-      </p>
+                      <p style="font-size:16px;line-height:1.6;margin:15px 0;color:#555;">
+                        We look forward to your presence at <strong>NIT Kurukshetra</strong> on 
+                        <strong>4th September, 2025</strong>.
+                      </p>
 
-      <!-- Divider -->
-      <hr style="margin:25px 0;border:none;border-top:1px solid #eee;" />
+                      <p style="font-size:16px;line-height:1.6;margin:15px 0;color:#555;">
+                        The detailed schedule will be shared with you shortly. <br/>
+                        Stay tuned for more information!
+                      </p>
 
-      <p style="font-size:16px;color:#2c3e50;margin:0;">
-        Best Wishes,<br/>
-        <strong>SAE NIT Kurukshetra</strong>
-      </p>
-    </div>
-  </div>
-  `
+                      <!-- Divider -->
+                      <hr style="margin:25px 0;border:none;border-top:1px solid #eee;" />
+
+                      <p style="font-size:16px;color:#2c3e50;margin:0;">
+                        Best Wishes,<br/>
+                        <strong>SAE NIT Kurukshetra</strong>
+                      </p>
+                    </div>
+                  </div>
+                  `
                     };
+
 
 
                     // fire and forget (don’t block redirect)
@@ -175,6 +176,25 @@ SAE NIT Kurukshetra`,
                         .catch(err => console.error("Email failed:", err.message));
                 }
 
+
+
+                const userDoc = await db.collection("AutokritiRegistration").doc(orderid).get();
+                if (!userDoc.exists) {
+                    console.error("No user data found for order:", orderid);
+                    // return res.status(404).json({ success: false, message: "User data not found" });
+                }
+                const userData = userDoc.data();
+                userData.paidAt = new Date();
+                const gsResponse = await fetch(
+                    "https://script.google.com/macros/s/AKfycbxhD0JnCXfn0OPyZqA3h5L0Al26nRhmCWuoOFW-FNS13mpzIQziF3seq1oOoAZ0SFK1og/exec",
+                    {
+                        method: "POST",
+                        body: JSON.stringify({
+                            ...userData,
+                            paidAt: new Date(),
+                        }),
+                    }
+                );
                 await db.collection("AutokritiRegistration").doc(orderid).update({
                     status: "PAID",
                     paidAt: new Date()
