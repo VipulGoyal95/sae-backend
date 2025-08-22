@@ -65,7 +65,8 @@ const newOrderId = async (req, res) => {
             order_meta: {
                 return_url: `https://sae-backend.vercel.app/api/status/${orderId}`,
                 notify_url: `https://sae-backend.vercel.app/api/status/${orderId}`,
-                payment_methods: 'cc,dc,upi,nb'
+                payment_methods: 'cc,dc,upi,nb',
+                cancel_url: `https://saenitkurukshetra.com/autokriti/registrationform`
             }
         };
 
@@ -186,6 +187,9 @@ SAE NIT Kurukshetra`,
         }
         else if (response.data?.order_status === "FAILED") {
             return res.redirect(`https://www.saenitkurukshetra.com/autokriti/registrationform`);
+        }
+        else if (response.data?.order_status === "CANCELLED") {
+            return res.redirect(`https://saenitkurukshetra.com/autokriti/registrationform`);
         }
 
     } catch (error) {
