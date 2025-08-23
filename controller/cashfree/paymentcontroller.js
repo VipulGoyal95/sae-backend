@@ -186,7 +186,7 @@ const checkStatus = async (req, res) => {
                 const userData = userDoc.data();
                 userData.paidAt = new Date();
                 const gsResponse = await fetch(
-                    "https://script.google.com/macros/s/AKfycbxhD0JnCXfn0OPyZqA3h5L0Al26nRhmCWuoOFW-FNS13mpzIQziF3seq1oOoAZ0SFK1og/exec",
+                    "https://script.google.com/macros/s/AKfycbzbA_vGQLXfDlKJYzCiWY0TuOL-V_jC1vEeAE3JZVk3R3_uYIAoOwTQR-gyD5XqqCeu9w/exec",
                     {
                         method: "POST",
                         body: JSON.stringify({
