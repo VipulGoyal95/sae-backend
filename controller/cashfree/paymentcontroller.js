@@ -203,7 +203,7 @@ const checkStatus = async (req, res) => {
                 console.error("Error in PAID flow:", err.message);
             }
 
-            return res.redirect("https://www.saenitkurukshetra.com/autokriti");
+            return res.redirect("https://www.saenitkurukshetra.com/autokriti/redirect");
         }
         else if (response.data?.order_status === "FAILED") {
             return res.redirect(`https://www.saenitkurukshetra.com/autokriti/registrationform`);
